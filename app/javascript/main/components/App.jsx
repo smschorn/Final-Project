@@ -1,15 +1,20 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import Navigation from './Navigation';
+import Home from './Home';
+import AccountList from './Accounts/AccountList';
 
 const App = (props) => (
   <Router>
     <div>
       <Navigation />
       <Container fluid>
-        <h1>Hello</h1>
+        <Switch>
+          <Route path='/' exact component={Home}/>
+          <Route path='/accounts' component={AccountList}/>
+        </Switch>
       </Container>
     </div>
   </Router>
