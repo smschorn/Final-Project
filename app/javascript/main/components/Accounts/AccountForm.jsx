@@ -1,12 +1,14 @@
 import React from 'react';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 
+import ModalForm from '../ModalForm';
+
 class AccountForm extends React.Component {
   constructor(props) {
     super(props)
   }
 
-  render() {
+  renderForm() {
     return (
       <Form>
         <FormGroup>
@@ -25,6 +27,15 @@ class AccountForm extends React.Component {
             placeholder="Enter monthly interest rate for this account" />
         </FormGroup>
       </Form>
+    );
+  }
+
+  render() {
+    return (
+      <ModalForm form={this.renderForm()}
+        title="Add Account"
+        submitText="Create Account"
+        onClose={this.props.onClose} />
     )
   }
 }
