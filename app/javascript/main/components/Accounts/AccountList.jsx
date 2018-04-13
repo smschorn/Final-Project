@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
 
+import AccountForm from './AccountForm';
 import accountsAPI from '../../apis/accountsAPI';
 
 class AccountList extends React.Component {
@@ -15,6 +16,14 @@ class AccountList extends React.Component {
     accountsAPI.getAll()
     .then(response => this.setState({accounts: response.data}))
     .catch(error => console.log(error))
+  }
+
+  handleOpenForm(account) {
+    const form = (
+      <AccountForm account={account} />
+    );
+
+    this.setState({form: form})
   }
 
   renderAccountRow(account) {
@@ -45,6 +54,12 @@ class AccountList extends React.Component {
             {this.state.accounts.map(this.renderAccountRow)}
           </tbody>
         </Table>
+
+        <Button color='primary' onClick={() => this.handleOpenForm({})}>
+          Add New Account
+        </Button>
+
+        {this.state.form}
       </div>
     )
   }
