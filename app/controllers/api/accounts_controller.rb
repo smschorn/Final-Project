@@ -1,13 +1,18 @@
 class Api::AccountsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  before_action :set_account, only: [:update, :destroy]
+  before_action :set_account, only: [:show, :update, :destroy]
   respond_to :json
 
   # GET /api/accounts.json
   def index
     @accounts = current_user.accounts.all
     respond_with @accounts
+  end
+
+  # GET /api/accounts/1.json
+  def show
+    respond_with @account, location: api_account_url(@account)
   end
 
   # POST /api/accounts.json
