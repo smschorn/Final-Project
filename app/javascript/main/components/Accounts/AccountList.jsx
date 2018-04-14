@@ -13,6 +13,8 @@ class AccountList extends React.Component {
     }
     this.handleCloseForm = this.handleCloseForm.bind(this)
     this.handleSubmitForm = this.handleSubmitForm.bind(this)
+
+    this.renderAccountRow = this.renderAccountRow.bind(this)
   }
 
   componentDidMount() {
@@ -36,14 +38,27 @@ class AccountList extends React.Component {
   }
 
   handleSubmitForm(account) {
-    accountsAPI.create(account)
-    .then(response => this.addAccountToTable(response.data))
-    .catch(error => console.log(error))
+    if (account.id) {
+      accountsAPI.update(account)
+      .then(response => this.updateAccountInTable(response.data))
+      .catch(error => console.log(error))
+    } else {
+      accountsAPI.create(account)
+      .then(response => this.addAccountToTable(response.data))
+      .catch(error => console.log(error))
+    }
+
     this.handleCloseForm();
   }
 
   addAccountToTable(account) {
     let accounts = update(this.state.accounts, { $push: [account] });
+    this.setState({accounts: accounts});
+  }
+
+  updateAccountInTable(account) {
+    let index = this.state.accounts.findIndex((item) => item && account && item.id)
+    let accounts = update(this.state.accounts, { [index]: { $set: account}});
     this.setState({accounts: accounts});
   }
 
@@ -53,7 +68,11 @@ class AccountList extends React.Component {
         <td>{account.name}</td>
         <td>{account.description}</td>
         <td>{account.interest_rate}</td>
-        <td></td>
+        <td>
+          <Button color='primary' size='sm' onClick={() => this.handleOpenForm(account)}>
+            Edit
+          </Button>
+        </td>
       </tr>
     )
   }

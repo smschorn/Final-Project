@@ -23,6 +23,7 @@ class AccountForm extends React.Component {
 
   handleSubmit() {
     this.props.onSubmit({
+      id: this.state.account.id,
       name: this.state.account.name,
       description: this.state.account.description,
       interest_rate: this.state.account.interest_rate,
