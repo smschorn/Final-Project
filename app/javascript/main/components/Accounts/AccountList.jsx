@@ -51,14 +51,28 @@ class AccountList extends React.Component {
     this.handleCloseForm();
   }
 
+  handleDeleteButtonClick(account) {
+    if (confirm("Are you sure you want to delete this account?")) {
+      accountsAPI.destroy(account)
+      .then(response => this.removeAccountFromTable(account))
+      .catch(error => console.log(error))
+    }
+  }
+
   addAccountToTable(account) {
     let accounts = update(this.state.accounts, { $push: [account] });
     this.setState({accounts: accounts});
   }
 
   updateAccountInTable(account) {
-    let index = this.state.accounts.findIndex((item) => item && account && item.id)
+    let index = this.state.accounts.findIndex((item) => item && account && item.id === account.id)
     let accounts = update(this.state.accounts, { [index]: { $set: account}});
+    this.setState({accounts: accounts});
+  }
+
+  removeAccountFromTable(account) {
+    let index = this.state.accounts.findIndex((item) => item && account && item.id === account.id)
+    let accounts = update(this.state.accounts, { $unset: [index] });
     this.setState({accounts: accounts});
   }
 
@@ -71,6 +85,10 @@ class AccountList extends React.Component {
         <td>
           <Button color='primary' size='sm' onClick={() => this.handleOpenForm(account)}>
             Edit
+          </Button>
+          {' '}
+          <Button color='danger' size='sm' onClick={() => this.handleDeleteButtonClick(account)}>
+            Delete
           </Button>
         </td>
       </tr>
