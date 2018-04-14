@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   namespace :api, format: :json do
     resources :accounts, only: [:index, :show, :create, :update, :destroy]
+    resources :ledgers, only: [:index, :show, :create, :update, :destroy]
   end
   root to: 'react#index'
 
