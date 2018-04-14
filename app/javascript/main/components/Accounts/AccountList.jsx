@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
+import update from 'immutability-helper';
 
 import AccountForm from './AccountForm';
 import accountsAPI from '../../apis/accountsAPI';
@@ -10,6 +11,8 @@ class AccountList extends React.Component {
     this.state = {
       accounts: []
     }
+    this.handleCloseForm = this.handleCloseForm.bind(this)
+    this.handleSubmitForm = this.handleSubmitForm.bind(this)
   }
 
   componentDidMount() {
@@ -20,10 +23,28 @@ class AccountList extends React.Component {
 
   handleOpenForm(account) {
     const form = (
-      <AccountForm account={account} />
+      <AccountForm account={account}
+        onSubmit={this.handleSubmitForm}
+        onClose={this.handleCloseForm} />
     );
 
     this.setState({form: form})
+  }
+
+  handleCloseForm() {
+    this.setState({form: null});
+  }
+
+  handleSubmitForm(account) {
+    accountsAPI.create(account)
+    .then(response => this.addAccountToTable(response.data))
+    .catch(error => console.log(error))
+    this.handleCloseForm();
+  }
+
+  addAccountToTable(account) {
+    let accounts = update(this.state.accounts, { $push: [account] });
+    this.setState({accounts: accounts});
   }
 
   renderAccountRow(account) {
