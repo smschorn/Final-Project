@@ -61,8 +61,8 @@ class AccountForm extends React.Component {
   render() {
     return (
       <ModalForm form={this.renderForm()}
-        title="Add Account"
-        submitText="Create Account"
+        title={this.state.account.id ? 'Edit Account' : "Add Account"}
+        submitText={this.state.account.id ? 'Update Account' : "Create Account"}
         onSubmit={this.handleSubmit}
         onClose={this.props.onClose} />
     )
