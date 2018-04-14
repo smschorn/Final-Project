@@ -36,18 +36,21 @@ class AccountForm extends React.Component {
         <FormGroup>
           <Label for="account_name">Account Name</Label>
           <Input type="text" name="name" id="account_name"
+            defaultValue={this.state.account.name}
             onChange={this.handleInputChange}
             placeholder="Enter account name" />
         </FormGroup>
         <FormGroup>
           <Label for="account_description">Account Description</Label>
           <Input type="textarea" name="description" id="account_description"
+            defaultValue={this.state.account.description}
             onChange={this.handleInputChange}
             placeholder="Enter account description" />
         </FormGroup>
         <FormGroup>
           <Label for="account_interest_rate">Monthly Interest Rate</Label>
           <Input type="text" name="interest_rate" id="account_interest_rate"
+            defaultValue={this.state.account.interest_rate}
             onChange={this.handleInputChange}
             placeholder="Enter monthly interest rate for this account" />
         </FormGroup>
