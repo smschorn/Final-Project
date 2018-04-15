@@ -17,7 +17,14 @@ class LedgerForm extends React.Component {
 
   handleInputChange(e) {
     let ledger = this.state.ledger;
-    ledger[e.target.name] = e.target.value;
+    if (e.target.name === 'date') {
+      let values = e.target.value.split('-');
+      ledger.year = parseInt(values[0])
+      ledger.month = parseInt(values[1]);
+    } else {
+      ledger[e.target.name] = e.target.value;
+    }
+
     this.setState(ledger)
   }
 
@@ -34,18 +41,11 @@ class LedgerForm extends React.Component {
     return (
       <Form>
         <FormGroup>
-          <Label for="ledger_year">Year</Label>
-          <Input type="text" name="year" id="ledger_year"
-            defaultValue={this.state.ledger.year}
+          <Label for="ledger_name">Year/Month</Label>
+          <Input type="month" name="date" id="ledger_date"
+            defaultValue={this.state.ledger.date ? this.state.ledger.date.format("YYYY-MM") : null}
             onChange={this.handleInputChange}
-            placeholder="Enter ledger year" />
-        </FormGroup>
-        <FormGroup>
-          <Label for="ledger_month">Month</Label>
-          <Input type="textarea" name="month" id="ledger_month"
-            defaultValue={this.state.ledger.month}
-            onChange={this.handleInputChange}
-            placeholder="Enter ledger month" />
+            placeholder="Enter ledger date" />
         </FormGroup>
         <FormGroup>
           <Label for="ledger_budget">Budget</Label>

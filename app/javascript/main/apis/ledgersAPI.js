@@ -14,14 +14,14 @@ const ledgersAPI = {
   getAll: function() {
     return axios({
       url: '/api/ledgers.json',
-      transformResponse: [], concat(axios.defaults.transformResponse, transformLedgers)
+      transformResponse: [].concat(axios.defaults.transformResponse, transformLedgers)
     });
   },
 
   getOne: function(id) {
     return axios({
       url: `/api/ledgers/${id}.json`,
-      transformResponse: [], concat(axios.defaults.transformResponse, transformLedger)
+      transformResponse: [].concat(axios.defaults.transformResponse, transformLedger)
     });
   },
 
@@ -36,7 +36,7 @@ const ledgersAPI = {
           budget: ledger.budget,
         }
       },
-      transformResponse: [], concat(axios.defaults.transformResponse, transformLedger)
+      transformResponse: [].concat(axios.defaults.transformResponse, transformLedger)
     });
   },
 
@@ -51,7 +51,7 @@ const ledgersAPI = {
           budget: ledger.budget,
         }
       },
-      transformResponse: [], concat(axios.defaults.transformResponse, transformLedger)
+      transformResponse: [].concat(axios.defaults.transformResponse, transformLedger)
     });
   },
 
