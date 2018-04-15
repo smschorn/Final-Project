@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, Button } from 'reactstrap';
+import { NavLink as RouterNavLink } from 'react-router-dom';
 import update from 'immutability-helper';
 
 import LedgerForm from './LedgerForm';
@@ -79,7 +80,11 @@ class LedgerList extends React.Component {
   renderLedgerRow(ledger) {
     return (
       <tr key={ledger.id}>
-        <td>{ledger.date.format('MMMM YYYY')}</td>
+        <td>
+          <RouterNavLink to={`/ledger/${ledger.id}`}>
+            {ledger.date.format('MMMM YYYY')}
+          </RouterNavLink>
+        </td>
         <td>{ledger.budget}</td>
         <td>
           <Button color='primary' size='sm' onClick={() => this.handleOpenForm(ledger)}>

@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import Home from './Home';
 import AccountList from './Accounts/AccountList';
 import LedgerList from './Ledgers/LedgerList';
+import LedgerPage from './Ledger/LedgerPage';
 
 const App = (props) => (
   <Router>
@@ -16,6 +17,7 @@ const App = (props) => (
           <Route path='/' exact component={Home}/>
           <Route path='/accounts' component={AccountList}/>
           <Route path='/ledgers' exact component={LedgerList}/>
+          <Route path='/ledgers/:id' exact component={LedgerPage}/>
         </Switch>
       </Container>
     </div>
