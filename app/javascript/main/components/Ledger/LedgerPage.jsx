@@ -1,6 +1,9 @@
 import React from 'react';
+import update from 'immutability-helper';
 
+import AccountStatementTable from './AccountStatementTable';
 import ledgersAPI from '../../apis/ledgersAPI';
+import accountStatementsAPI from '../../apis/accountStatementsAPI';
 
 class LedgerPage extends React.Component {
   constructor(props) {
@@ -9,6 +12,8 @@ class LedgerPage extends React.Component {
       ledger: null,
       accountStatements: []
     };
+
+    this.handleUpdateAccountStatement = this.handleUpdateAccountStatement.bind(this);
   }
 
   componentDidMount() {
@@ -16,6 +21,20 @@ class LedgerPage extends React.Component {
     .then(response => {
       let ledger = response.data;
       this.setState({ledger: ledger})
+
+      accountStatementsAPI.getAll(ledger)
+      .then(response => this.setState({accountStatements: response.data}))
+      .catch(error => console.log(error))
+    })
+    .catch(error => console.log(error))
+  }
+
+  handleUpdateAccountStatement(accountStatement) {
+    accountStatementsAPI.update(this.state.ledger, accountStatement)
+    .then(response => {
+      let index = this.state.accountStatements.findIndex((item) => item.id === response.data.id);
+      let accountStatements = update(this.state.accountStatements, { [index]: { $set: response.data }});
+      this.setState({accountStatements: accountStatements});
     })
     .catch(error => console.log(error))
   }
@@ -27,7 +46,9 @@ class LedgerPage extends React.Component {
         <hr />
 
         <h4>Account Statements</h4>
-        <p>TODO: Account statement table goes here</p>
+        <AccountStatementTable ledger={this.state.ledger}
+          accountStatements={this.state.accountStatements}
+          onUpdateRow={this.handleUpdateAccountStatement} />
       </div>
     )
   }
