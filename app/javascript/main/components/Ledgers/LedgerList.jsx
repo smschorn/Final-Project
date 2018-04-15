@@ -79,8 +79,7 @@ class LedgerList extends React.Component {
   renderLedgerRow(ledger) {
     return (
       <tr key={ledger.id}>
-        <td>{ledger.year}</td>
-        <td>{ledger.month}</td>
+        <td>{ledger.date.format('MMMM YYYY')}</td>
         <td>{ledger.budget}</td>
         <td>
           <Button color='primary' size='sm' onClick={() => this.handleOpenForm(ledger)}>
@@ -102,8 +101,7 @@ class LedgerList extends React.Component {
         <Table className='border-top border-bottom'>
           <thead className='thead-light'>
             <tr>
-              <th>Year</th>
-              <th>Month</th>
+              <th>Year/Month</th>
               <th>Budget</th>
               <th></th>
             </tr>

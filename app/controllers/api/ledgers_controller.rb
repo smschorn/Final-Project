@@ -18,6 +18,9 @@ class Api::LedgersController < ApplicationController
   # POST /api/ledgers.json
   def create
     @ledger = current_user.ledgers.create(ledger_params)
+    current_user.accounts.each do |account|
+      @ledger.account_statements.create(account: account)
+    end 
     respond_with @ledger, location: api_ledger_url(@ledger)
   end
 
