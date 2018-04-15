@@ -81,7 +81,7 @@ class LedgerList extends React.Component {
     return (
       <tr key={ledger.id}>
         <td>
-          <RouterNavLink to={`/ledger/${ledger.id}`}>
+          <RouterNavLink to={`/ledgers/${ledger.id}`}>
             {ledger.date.format('MMMM YYYY')}
           </RouterNavLink>
         </td>

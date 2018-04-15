@@ -26,10 +26,10 @@ class AccountStatementTable extends React.Component {
         <thead className="thead-light">
           <tr>
             <th>Account Name</th>
-            <th> style={{width: '200px'}}>Interest Rate</th>
-            <th> style={{width: '200px'}}>Current Balance</th>
-            <th> style={{width: '200px'}}>Minimum Payment</th>
-            <th> style={{width: '150px'}}></th>
+            <th style={{width: '200px'}}>Interest Rate</th>
+            <th style={{width: '200px'}}>Current Balance</th>
+            <th style={{width: '200px'}}>Minimum Payment</th>
+            <th style={{width: '150px'}}></th>
           </tr>
         </thead>
         <tbody>
