@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Input } from 'reactstrap';
+import moment from 'moment';
 
 class AccountStatementRow extends React.Component {
   constructor(props) {
@@ -9,7 +10,8 @@ class AccountStatementRow extends React.Component {
       isEditing: false,
       id: this.props.accountStatement.id,
       current_balance: this.props.accountStatement.current_balance,
-      minimum_payment: this.props.accountStatement.minimum_payment
+      minimum_payment: this.props.accountStatement.minimum_payment,
+      payoff_date: null
     }
 
     this.handleEditClick = this.handleEditClick.bind(this);
@@ -18,12 +20,50 @@ class AccountStatementRow extends React.Component {
     this.handleUndoClick = this.handleUndoClick.bind(this);
   }
 
+  componentDidMount() {
+    this.handleAccountStatementUpdate()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      prevProps.accountStatement.current_balance != this.props.accountStatement.current_balance ||
+      prevProps.accountStatement.minimum_payment != this.props.accountStatement.minimum_payment
+    ) {
+      this.handleAccountStatementUpdate()
+    }
+  }
+
+  handleAccountStatementUpdate() {
+    let payoffPeriod = this.calculatePayoffPeriod(
+      (this.props.accountStatement.account.interest_rate / 12 / 100),
+      this.state.current_balance,
+      this.state.minimum_payment
+    )
+
+    this.setState({
+      payoff_date: moment(this.props.ledger.date).add(payoffPeriod, 'months')
+    })
+  }
+
+  calculatePayoffPeriod(interestRate, principal, payment) {
+    let currentBalance = principal
+    let numberOfMonths = 0
+
+    while (currentBalance>0) {
+      currentBalance = currentBalance - payment
+      currentBalance = currentBalance + (currentBalance * interestRate)
+      numberOfMonths += 1
+    }
+
+    return numberOfMonths
+  }
+
   handleEditClick() {
     this.setState({isEditing: true})
   }
 
   handleInputChange(e) {
-    this.setState({[e.targe.name]: e.target.value})
+    this.setState({[e.target.name]: e.target.value})
   }
 
   handleSaveClick() {
@@ -84,6 +124,7 @@ class AccountStatementRow extends React.Component {
         <td>{this.props.accountStatement.account.interest_rate}</td>
         <td>{this.renderEditableField('current_balance', this.state.current_balance)}</td>
         <td>{this.renderEditableField('minimum_payment', this.state.minimum_payment)}</td>
+        <td>{this.state.payoff_date ? this.state.payoff_date.format("MMMM YYYY") : ''}</td>
         <td>{this.renderButtons()}</td>
       </tr>
     );

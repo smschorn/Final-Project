@@ -15,6 +15,7 @@ class AccountStatementTable extends React.Component {
       return (
         <AccountStatementRow key={accountStatement.id}
           accountStatement={accountStatement}
+          ledger={this.props.ledger}
           onUpdate={this.props.onUpdateRow} />
       );
     }
@@ -29,7 +30,8 @@ class AccountStatementTable extends React.Component {
             <th style={{width: '200px'}}>Interest Rate</th>
             <th style={{width: '200px'}}>Current Balance</th>
             <th style={{width: '200px'}}>Minimum Payment</th>
-            <th style={{width: '150px'}}></th>
+            <th style={{width: '200px'}}>Payoff Date</th>
+            <th style={{width: '200px'}}></th>
           </tr>
         </thead>
         <tbody>
