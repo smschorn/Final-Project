@@ -14,7 +14,7 @@ const App = (props) => (
       <Navigation />
       <Container fluid>
         <Switch>
-          <Route path='/' exact component={Home}/>
+          <Route path='/' exact component={LedgerList}/>
           <Route path='/accounts' component={AccountList}/>
           <Route path='/ledgers' exact component={LedgerList}/>
           <Route path='/ledgers/:id' exact component={LedgerPage}/>

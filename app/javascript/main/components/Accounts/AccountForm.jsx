@@ -48,11 +48,11 @@ class AccountForm extends React.Component {
             placeholder="Enter account description" />
         </FormGroup>
         <FormGroup>
-          <Label for="account_interest_rate">Monthly Interest Rate</Label>
+          <Label for="account_interest_rate">Annual Interest Rate</Label>
           <Input type="text" name="interest_rate" id="account_interest_rate"
             defaultValue={this.state.account.interest_rate}
             onChange={this.handleInputChange}
-            placeholder="Enter monthly interest rate for this account" />
+            placeholder="Enter annual interest rate for this account" />
         </FormGroup>
       </Form>
     );

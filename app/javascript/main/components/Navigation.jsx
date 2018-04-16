@@ -34,7 +34,7 @@ class Navigation extends React.Component {
               <RRNavLink to='/accounts' className='nav-link'>Accounts</RRNavLink>
             </NavItem>
             <NavItem>
-              <NavLink to='/users/sign_out' className='nav-link'>Log Out</NavLink>
+              <NavLink href='/users/sign_out' className='nav-link'>Log Out</NavLink>
             </NavItem>
           </Nav>
         </Collapse>
